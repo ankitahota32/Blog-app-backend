@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const User = require("./schema/mongoUser");
 const Post = require("./schema/mongoPost");
+const mongoose = require('mongoose');
 
 
 const app = express();
@@ -100,17 +101,17 @@ app.get("/posts/user/:userId", async (req, res) => {
   }
 });
 
-// app.get("/posts/:id", async (req, res) => {
-//   try {
-//     const post = await Post.findById(req.params.id);
-//     if (!post) {
-//       return res.status(404).json({ message: "Post not found" });
-//     }
-//     res.json(post);
-//   } catch (error) {
-//     res.status(500).json({ message: "Server error" });
-//   }
-// });
+app.get("/posts/:id", async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+    res.json(post);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
 app.delete("/posts/:id", async (req, res) => {
   try {
